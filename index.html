@@ -1,65 +1,410 @@
 <!doctype html>
-<html lang="en">
+<html lang="sk">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
-    <!-- <link rel="icon" href="/favicon.ico" /> -->
-    <meta name="generator" content="{Astro.generator}" />
     <title>Bakalárska práca - Emanuel Leco</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #1a1714;
+        --ink-light: #4a4540;
+        --ink-faint: #9a9390;
+        --paper: #f5f2ed;
+        --paper-dark: #ede9e2;
+        --rule: #1a1714;
+        --accent: #8b1a1a;
+        --accent-soft: rgba(139, 26, 26, 0.08);
+        --mono: "IBM Plex Mono", monospace;
+        --serif: "Source Serif 4", serif;
+        --display: "Playfair Display", serif;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        background: var(--paper-dark);
+      }
+
+      body {
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--serif);
+        max-width: 1100px;
+        margin: 0 auto;
+        min-height: 100vh;
+        border-left: 1px solid var(--paper-dark);
+        border-right: 1px solid var(--paper-dark);
+        animation: fadeIn 0.6s ease forwards;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ── HEADER BAR ── */
+      .site-header {
+        border-bottom: 3px solid var(--rule);
+        padding: 0.6rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--paper);
+      }
+
+      .site-header .label {
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+      }
+
+      .site-header .label strong {
+        color: var(--accent);
+      }
+
+      /* ── MAIN GRID ── */
+      .layout {
+        display: grid;
+        grid-template-columns: 44% 56%;
+        min-height: calc(100vh - 52px);
+      }
+
+      .col-left {
+        border-right: 2px solid var(--rule);
+        padding: 2.5rem 2rem 3rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .col-right {
+        padding: 2.5rem 2rem 3rem;
+        background: var(--paper);
+      }
+
+      /* ── TYPOGRAPHY ── */
+      h1 {
+        font-family: var(--display);
+        font-size: 2.1rem;
+        font-weight: 700;
+        line-height: 1.2;
+        color: var(--ink);
+        margin-bottom: 1.8rem;
+        letter-spacing: -0.01em;
+      }
+
+      h1 em {
+        font-style: italic;
+        color: var(--accent);
+      }
+
+      h2 {
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        margin-top: 2rem;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      h3 {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        font-weight: 500;
+        color: var(--ink);
+        margin-bottom: 0.4rem;
+        letter-spacing: 0.04em;
+      }
+
+      p {
+        font-size: 0.92rem;
+        line-height: 1.7;
+        color: var(--ink-light);
+        margin-bottom: 0.5rem;
+      }
+
+      /* ── META BLOCK ── */
+      .meta-block {
+        margin-bottom: 0.25rem;
+      }
+
+      .meta-block .author {
+        font-family: var(--display);
+        font-size: 1.05rem;
+        font-style: italic;
+        color: var(--ink);
+        display: block;
+        margin-bottom: 0.2rem;
+      }
+
+      .meta-block a {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        color: var(--accent);
+        text-decoration: none;
+        letter-spacing: 0.02em;
+        display: block;
+        margin-bottom: 0.15rem;
+      }
+
+      .meta-block a:hover {
+        text-decoration: underline;
+      }
+
+      .meta-block .supervisor {
+        font-size: 0.8rem;
+        color: var(--ink-faint);
+        font-family: var(--serif);
+        font-style: italic;
+        display: block;
+        margin-top: 0.4rem;
+      }
+
+      /* ── DOWNLOAD BUTTON ── */
+      .dl-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 1.2rem;
+        padding: 0.55rem 1rem;
+        border: 1.5px solid var(--rule);
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: var(--ink);
+        background: transparent;
+        transition:
+          background 0.18s,
+          color 0.18s;
+        cursor: pointer;
+      }
+
+      .dl-btn:hover {
+        background: var(--ink);
+        color: var(--paper);
+      }
+
+      .dl-btn .arrow {
+        font-size: 0.9rem;
+        transition: transform 0.18s;
+      }
+
+      .dl-btn:hover .arrow {
+        transform: translateY(2px);
+      }
+
+      /* ── ANNOTATION ── */
+      .annotation p {
+        font-size: 0.88rem;
+        line-height: 1.72;
+        text-align: justify;
+        hyphens: auto;
+        color: var(--ink-light);
+      }
+
+      /* ── SOURCES ── */
+      .sources ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .sources ul li {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        color: var(--ink-faint);
+        padding: 0.3rem 0;
+        border-bottom: 1px dashed var(--paper-dark);
+      }
+
+      /* ── WEEKLY LOG ── */
+      .log-header {
+        display: flex;
+        align-items: baseline;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .log-header h2 {
+        margin: 0;
+        border: none;
+        padding: 0;
+      }
+
+      .entry {
+        margin-bottom: 1.5rem;
+        padding-left: 1rem;
+        border-left: 2px solid var(--paper-dark);
+        transition: border-color 0.2s;
+      }
+
+      .entry:hover {
+        border-left-color: var(--accent);
+      }
+
+      .entry-date {
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.06em;
+        color: var(--accent);
+        margin-bottom: 0.35rem;
+        display: block;
+      }
+
+      .entry h3 {
+        font-family: var(--serif);
+        font-size: 0.88rem;
+        font-weight: 400;
+        color: var(--ink);
+        margin-bottom: 0.25rem;
+        letter-spacing: 0;
+      }
+
+      .entry p {
+        font-size: 0.82rem;
+        color: var(--ink-faint);
+        margin: 0;
+        line-height: 1.55;
+      }
+
+      /* ── FOOTER RULE ── */
+      .col-left::after {
+        content: "";
+        display: block;
+        margin-top: auto;
+        padding-top: 2rem;
+      }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 720px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+        .col-left {
+          border-right: none;
+          border-bottom: 2px solid var(--rule);
+        }
+        h1 {
+          font-size: 1.65rem;
+        }
+      }
+
+      footer p {
+        font-size: 0.8rem;
+        text-align: center;
+        border-top: 2px solid var(--rule);
+        padding: 1em;
+      }
+
+      footer a {
+        font-family: var(--mono);
+        color: var(--accent);
+        text-decoration: none;
+        margin-bottom: 0.15rem;
+      }
+    </style>
   </head>
   <body>
-    <h1>
-      Vylepšenie trénovania neurónových sietí pomocou topologickej
-      samoorganizácie
-    </h1>
+    <header class="site-header">
+      <span class="label"
+        >Univerzita Komenského · <strong>Bakalárska práca</strong> ·
+        2025/2026</span
+      >
+      <span class="label">FMFI UK</span>
+    </header>
 
-    <p>Emanuel Leco</p>
-    <a href="mailto:leco3@uniba.sk">leco3@uniba.sk</a>
-    <p>Školiteľka: RNDr. Kristína Malinovská, PhD.</p>
-    <a href="">Stiahnuť aktuálne PDF práce (zatiaľ žiadne)</a>
+    <div class="layout">
+      <!-- LEFT COLUMN -->
+      <aside class="col-left">
+        <h1>
+          Vylepšenie trénovania neurónových sietí pomocou topologickej
+          samoorganizácie
+        </h1>
 
-    <h2>Anotácia</h2>
-    <p>
-      Učenie v biologických neurónových sieťach zahŕňa učenie sa s učiteľom aj
-      samoorganizované učenie sa. Výhodou zavedenia komponentu učenia
-      samoorganizáciou do štandardného učenia sa s učiteľom (error-driven
-      learning) je, že model dokáže zachytiť štruktúru a regularity vstupných
-      dát. Samoorganizujúce sa mapy sú jedným z klasických modelov neurónových
-      sietí, ktoré nevyžadujú trénovací signál a napriek tomu zachytávajú vzťahy
-      v trénovacích dátach zachovávajúc podobnosti topologickým spôsobom. Tento
-      mechanizmus možno využiť na zlepšenie učenia sa s učiteľom pomocou
-      informácií pochádzajúcich zo štruktúry dát alebo ich príznakových
-      vektorov. Na ceste k biologicky motivovanému zlepšeniu učenia sa s
-      učiteľom bol navrhnutý nový model neurónovej siete MLP-SOM. Kombinuje
-      klasickú stratovú funkciu na báze chybového signálu so stratovou funkciou
-      založenou na vzdialenosti reprezentácie dát v natrénovanej
-      samoorganizujúcej sa mape. Naše predbežné výsledky pri prvotnom testovaní
-      modelu ukazujú sľubnú budúcnosť nášho prístupu.
-    </p>
+        <div class="meta-block">
+          <span class="author">Emanuel Leco</span>
+          <a href="mailto:leco3@uniba.sk">leco3@uniba.sk</a>
+          <span class="supervisor"
+            >Školiteľka: RNDr. Kristína Malinovská, PhD.</span
+          >
+        </div>
 
-    <h2>Týždenník</h2>
-    <ul>
-      <li>
-        <h3>02. 03. 2026 - 08. 03. 2026</h3>
-        <p>Vytvorenie stránky ku bakalárskej práci</p>
-        <p>...</p>
-      </li>
-    </ul>
+        <a class="dl-btn" href="#">
+          <span class="arrow">↓</span> Stiahnuť PDF práce
+          <span style="color: var(--ink-faint); font-size: 0.65rem"
+            >(zatiaľ žiadne)</span
+          >
+        </a>
 
-    <h2>Zdroje</h2>
-    <ul>
-      <li>...bude doplnené</li>
-    </ul>
+        <div class="annotation">
+          <h2>Anotácia</h2>
+          <p>
+            Učenie v biologických neurónových sieťach zahŕňa učenie sa s
+            učiteľom aj samoorganizované učenie sa. Výhodou zavedenia komponentu
+            učenia samoorganizáciou do štandardného učenia sa s učiteľom
+            (error-driven learning) je, že model dokáže zachytiť štruktúru a
+            regularity vstupných dát. Samoorganizujúce sa mapy sú jedným z
+            klasických modelov neurónových sietí, ktoré nevyžadujú trénovací
+            signál a napriek tomu zachytávajú vzťahy v trénovacích dátach
+            zachovávajúc podobnosti topologickým spôsobom. Tento mechanizmus
+            možno využiť na zlepšenie učenia sa s učiteľom pomocou informácií
+            pochádzajúcich zo štruktúry dát alebo ich príznakových vektorov. Na
+            ceste k biologicky motivovanému zlepšeniu učenia sa s učiteľom bol
+            navrhnutý nový model neurónovej siete MLP-SOM. Kombinuje klasickú
+            stratovú funkciu na báze chybového signálu so stratovou funkciou
+            založenou na vzdialenosti reprezentácie dát v natrénovanej
+            samoorganizujúcej sa mape. Naše predbežné výsledky pri prvotnom
+            testovaní modelu ukazujú sľubnú budúcnosť nášho prístupu.
+          </p>
+        </div>
+
+        <div class="sources">
+          <h2>Zdroje</h2>
+          <ul>
+            <li>… bude doplnené</li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- RIGHT COLUMN -->
+      <main class="col-right">
+        <h2 style="margin-top: 0">Týždenník</h2>
+
+        <div class="entry">
+          <span class="entry-date">02. 03. 2026 – 08. 03. 2026</span>
+          <h3>Vytvorenie stránky ku bakalárskej práci</h3>
+          <p>…</p>
+        </div>
+      </main>
+    </div>
+    <footer>
+      <p>
+        Tvorba stránky bola urýchlená s pomocou
+        <a href="https://claude.ai">claude.ai</a>
+      </p>
+    </footer>
   </body>
 </html>
-
-<style>
-  html,
-  body {
-    margin: 0 auto;
-    padding: 1em;
-    height: 100%;
-    max-width: 60%;
-  }
-</style>
